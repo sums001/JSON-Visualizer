@@ -1,0 +1,174 @@
+/* Prism design tokens — drop into any plain-CSS app.
+   Dark is the default; set data-theme="light" on <html> (or any wrapper) for light. */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces — 0 is the canvas, each step is one elevation up */
+  --prism-bg-0: #0a0b0d;   /* canvas, code wells */
+  --prism-bg-1: #111214;   /* app chrome: top bar, sidebar, inspector */
+  --prism-bg-2: #17181b;   /* raised: inputs, tiles, cards */
+  --prism-bg-3: #1e1f23;   /* hover, popovers, menus */
+  --prism-bg-4: #27282d;   /* pressed / active */
+  --prism-scrim: rgba(5, 6, 8, 0.72);
+
+  /* Borders — hairlines */
+  --prism-border-1: rgba(255, 255, 255, 0.06);  /* dividers */
+  --prism-border-2: rgba(255, 255, 255, 0.10);  /* controls, cards */
+  --prism-border-3: rgba(255, 255, 255, 0.17);  /* hover, strong */
+
+  /* Text */
+  --prism-text-1: #ededef;  /* primary */
+  --prism-text-2: #a6a6ae;  /* secondary */
+  --prism-text-3: #84848d;  /* tertiary, still ≥4.5:1 on bg-1 */
+  --prism-text-4: #5b5b63;  /* disabled */
+
+  /* Accent — selection, focus, primary action. The only non-data hue. */
+  --prism-accent: #5d66f5;
+  --prism-accent-hover: #6e76ff;
+  --prism-accent-pressed: #4f57e0;
+  --prism-accent-text: #a4aaff;
+  --prism-accent-soft: rgba(93, 102, 245, 0.16);
+  --prism-accent-line: rgba(124, 132, 255, 0.55);
+  --prism-on-accent: #ffffff;
+  --prism-focus-ring: 0 0 0 2px var(--prism-bg-1), 0 0 0 4px #7d84ff;
+
+  /* Semantic (status only — never decorative) */
+  --prism-danger: #f2555a;
+  --prism-danger-text: #ff8a8d;
+  --prism-danger-soft: rgba(242, 85, 90, 0.12);
+  --prism-success-text: #8fd9a8;
+
+  /* JSON type colors — tuned for colorblind separation via hue AND lightness.
+     Always pair with the type glyph ({} [] "" # ? ∅) for redundancy. */
+  --prism-type-object: #5cc4ea;
+  --prism-type-array: #b597f7;
+  --prism-type-string: #62d59b;
+  --prism-type-number: #f2a647;
+  --prism-type-boolean: #f47fae;
+  --prism-type-null: #8e929c;
+  --prism-type-object-soft: rgba(92, 196, 234, 0.13);
+  --prism-type-array-soft: rgba(181, 151, 247, 0.14);
+  --prism-type-string-soft: rgba(98, 213, 155, 0.12);
+  --prism-type-number-soft: rgba(242, 166, 71, 0.13);
+  --prism-type-boolean-soft: rgba(244, 127, 174, 0.13);
+  --prism-type-null-soft: rgba(142, 146, 156, 0.14);
+
+  /* Viz */
+  --prism-link: rgba(255, 255, 255, 0.14);
+  --prism-link-active: var(--prism-accent-line);
+  --prism-grid-dot: rgba(255, 255, 255, 0.05);
+
+  /* Shadows — used only on floating layers */
+  --prism-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --prism-shadow-md: 0 8px 24px -6px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--prism-border-2);
+  --prism-shadow-lg: 0 24px 64px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--prism-border-2);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --prism-bg-0: #f5f5f6;
+  --prism-bg-1: #ffffff;
+  --prism-bg-2: #f7f7f8;
+  --prism-bg-3: #efeff1;
+  --prism-bg-4: #e5e5e8;
+  --prism-scrim: rgba(20, 20, 24, 0.32);
+
+  --prism-border-1: rgba(10, 10, 20, 0.07);
+  --prism-border-2: rgba(10, 10, 20, 0.11);
+  --prism-border-3: rgba(10, 10, 20, 0.19);
+
+  --prism-text-1: #18181b;
+  --prism-text-2: #4f4f57;
+  --prism-text-3: #6b6b74;
+  --prism-text-4: #a5a5ad;
+
+  --prism-accent: #4f57e8;
+  --prism-accent-hover: #444cd8;
+  --prism-accent-pressed: #3a41c4;
+  --prism-accent-text: #3f47d6;
+  --prism-accent-soft: rgba(79, 87, 232, 0.10);
+  --prism-accent-line: rgba(79, 87, 232, 0.55);
+  --prism-on-accent: #ffffff;
+  --prism-focus-ring: 0 0 0 2px var(--prism-bg-1), 0 0 0 4px #6a71f0;
+
+  --prism-danger: #d93036;
+  --prism-danger-text: #c0262c;
+  --prism-danger-soft: rgba(217, 48, 54, 0.08);
+  --prism-success-text: #13784a;
+
+  --prism-type-object: #0b7aa3;
+  --prism-type-array: #7647d4;
+  --prism-type-string: #11804f;
+  --prism-type-number: #b15a00;
+  --prism-type-boolean: #c22c6c;
+  --prism-type-null: #676c76;
+  --prism-type-object-soft: rgba(11, 122, 163, 0.10);
+  --prism-type-array-soft: rgba(118, 71, 212, 0.10);
+  --prism-type-string-soft: rgba(17, 128, 79, 0.10);
+  --prism-type-number-soft: rgba(177, 90, 0, 0.10);
+  --prism-type-boolean-soft: rgba(194, 44, 108, 0.10);
+  --prism-type-null-soft: rgba(103, 108, 118, 0.12);
+
+  --prism-link: rgba(10, 10, 20, 0.16);
+  --prism-grid-dot: rgba(10, 10, 20, 0.07);
+
+  --prism-shadow-sm: 0 1px 2px rgba(10, 10, 20, 0.06);
+  --prism-shadow-md: 0 8px 24px -6px rgba(10, 10, 20, 0.14), 0 0 0 1px var(--prism-border-2);
+  --prism-shadow-lg: 0 24px 64px -12px rgba(10, 10, 20, 0.22), 0 0 0 1px var(--prism-border-2);
+}
+
+/* Theme-independent scales */
+:root {
+  --prism-font-sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --prism-font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Type scale (size / line-height). Nothing below 11px. */
+  --prism-text-xs: 11px;   --prism-leading-xs: 16px;   /* kbd, meta, badges */
+  --prism-text-sm: 12px;   --prism-leading-sm: 16px;   /* labels, code, table */
+  --prism-text-md: 13px;   --prism-leading-md: 20px;   /* default UI */
+  --prism-text-lg: 14px;   --prism-leading-lg: 20px;   /* emphasis */
+  --prism-text-xl: 16px;   --prism-leading-xl: 24px;   /* view titles */
+  --prism-text-2xl: 20px;  --prism-leading-2xl: 28px;  /* stat values */
+  --prism-text-3xl: 28px;  --prism-leading-3xl: 34px;  /* big values */
+  --prism-text-4xl: 48px;  --prism-leading-4xl: 52px;  /* landing headline */
+  --prism-weight-regular: 400;
+  --prism-weight-medium: 500;
+  --prism-weight-semibold: 600;
+
+  /* Spacing — 4px grid */
+  --prism-space-1: 4px;
+  --prism-space-2: 8px;
+  --prism-space-3: 12px;
+  --prism-space-4: 16px;
+  --prism-space-5: 20px;
+  --prism-space-6: 24px;
+  --prism-space-8: 32px;
+  --prism-space-10: 40px;
+  --prism-space-12: 48px;
+
+  /* Radius */
+  --prism-radius-xs: 4px;   /* kbd, badges */
+  --prism-radius-sm: 6px;   /* controls */
+  --prism-radius-md: 8px;   /* tiles, menus */
+  --prism-radius-lg: 12px;  /* panels, modals */
+  --prism-radius-full: 999px;
+
+  /* Control heights */
+  --prism-control-xs: 20px;
+  --prism-control-sm: 24px;
+  --prism-control-md: 28px;
+  --prism-control-lg: 32px;
+  --prism-control-xl: 40px;
+
+  /* Layout */
+  --prism-topbar-h: 48px;
+  --prism-sidebar-w: 192px;
+  --prism-inspector-w: 340px;
+
+  /* Motion */
+  --prism-ease: cubic-bezier(0.2, 0, 0, 1);
+  --prism-duration-fast: 120ms;
+  --prism-duration: 180ms;
+}
