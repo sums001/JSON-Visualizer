@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "JSON Prism",
   "version": "0.0.0",
-  "description": "Opens JSON responses in Prism: tree, radial, graph, cards, schema, table, columns and raw views of one document.",
+  "description": "JSON viewer that opens any JSON response in 8 graphical views: raw, tree, radial, graph, cards, schema, table and columns.",
   "icons": {
     "16": "prism-logo-16.png",
     "32": "prism-logo-32.png",
