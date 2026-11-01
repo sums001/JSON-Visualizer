@@ -120,7 +120,7 @@
 .ca-errline { position: absolute; left: 0; right: 0; height: 20px; background: var(--prism-danger-soft); pointer-events: none; }
 
 /* ================= search ================= */
-.search-wrap { position: relative; min-width: 0; }
+.search-wrap { position: relative; flex: 0 1 320px; min-width: 160px; }
 .search { height: var(--prism-control-lg); display: flex; align-items: center; gap: 8px; padding: 0 6px 0 10px; background: var(--prism-bg-2); border: 1px solid var(--prism-border-2); border-radius: var(--prism-radius-sm); color: var(--prism-text-3); cursor: text; transition: border-color var(--prism-duration-fast), box-shadow var(--prism-duration-fast); }
 .search:hover { border-color: var(--prism-border-3); }
 .search.focus { border-color: var(--prism-accent); box-shadow: 0 0 0 3px var(--prism-accent-soft); color: var(--prism-text-2); }
@@ -133,8 +133,8 @@
 .search-step button:hover { background: var(--prism-bg-3); color: var(--prism-text-1); }
 .search-keys { flex: none; display: flex; gap: 4px; }
 .search-keys .kbd { background: var(--prism-bg-1); }
-.search-panel { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); width: min(600px, calc(100vw - 24px)); background: var(--prism-bg-2); border-radius: 10px; box-shadow: var(--prism-shadow-lg); overflow: hidden; z-index: 50; animation: pop var(--prism-duration-fast) var(--prism-ease); }
-@keyframes pop { from { opacity: 0; transform: translate(-50%, -4px); } }
+.search-panel { position: absolute; top: calc(100% + 6px); right: 0; width: min(600px, calc(100vw - 24px)); background: var(--prism-bg-2); border-radius: 10px; box-shadow: var(--prism-shadow-lg); overflow: hidden; z-index: 50; animation: pop var(--prism-duration-fast) var(--prism-ease); }
+@keyframes pop { from { opacity: 0; transform: translateY(-4px); } }
 .sp-head { height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 8px 0 14px; border-bottom: 1px solid var(--prism-border-1); font-size: var(--prism-text-sm); color: var(--prism-text-3); }
 .sp-head b { font-weight: var(--prism-weight-medium); color: var(--prism-text-1); }
 .sp-head .seg { height: 24px; background: var(--prism-bg-1); }

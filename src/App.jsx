@@ -2,6 +2,7 @@ import { Component, useEffect, useState } from 'react';
 import { useStore } from './store';
 import { parseInput } from './lib/parse';
 import { SAMPLES } from './lib/samples';
+import { EMBED, announceReady, fileNameFromUrl, giveUp } from './lib/embed';
 import { VIEWS } from './views';
 import Landing from './components/Landing';
 import TopBar from './components/TopBar';
@@ -125,7 +126,30 @@ function useUrlBoot() {
   }, []);
 }
 
+// In the extension's frame: wait for the response text from the content script instead of showing the start page.
+function useEmbedBoot() {
+  const [waiting, setWaiting] = useState(EMBED);
+  useEffect(() => {
+    if (!EMBED) return;
+    const onMessage = (e) => {
+      if (e.source !== window.parent || e.data?.type !== 'prism:json') return;
+      const { text, url, view } = e.data;
+      const res = parseInput(String(text));
+      if (res.error) return giveUp();
+      useStore.getState().load(res.json, fileNameFromUrl(url), text);
+      // the view responses open in, from the extension's settings
+      if (VIEWS.some((v) => v.id === view)) useStore.getState().setView(view);
+      setWaiting(false);
+    };
+    window.addEventListener('message', onMessage);
+    announceReady();
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+  return waiting;
+}
+
 export default function App() {
+  const waiting = useEmbedBoot();
   const model = useStore((s) => s.model);
   const view = useStore((s) => s.view);
   const setView = useStore((s) => s.setView);
@@ -138,6 +162,8 @@ export default function App() {
 
   const active = VIEWS.find((v) => v.id === view) || VIEWS[0];
   const View = active.component;
+
+  if (waiting) return null;
 
   return (
     <>

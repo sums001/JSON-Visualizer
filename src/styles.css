@@ -30,14 +30,19 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { box-shadow: va
 .brand:hover { background: var(--prism-bg-3); }
 
 /* ---------- app shell ---------- */
-.app { height: 100%; display: grid; grid-template-rows: var(--prism-topbar-h) minmax(0, 1fr); grid-template-columns: var(--prism-sidebar-w) minmax(0, 1fr) auto; }
-.topbar { grid-column: 1 / -1; position: relative; z-index: 30; display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 440px) minmax(0, 1fr); align-items: center; gap: 16px; padding: 0 12px; background: var(--prism-bg-1); border-bottom: 1px solid var(--prism-border-1); }
-.tb-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.tb-right { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
-.file-name { display: flex; align-items: center; gap: 6px; min-width: 0; font-weight: var(--prism-weight-medium); white-space: nowrap; }
+.app { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); grid-template-columns: var(--prism-sidebar-w) minmax(0, 1fr) auto; }
+/* one header row: brand and file, then the active view's title and tools, then search and document actions.
+   When a window is too narrow for all of it, the search and actions wrap onto a second row. */
+.topbar { grid-column: 1 / -1; position: relative; z-index: 30; min-height: var(--prism-topbar-h); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 8px 12px; background: var(--prism-bg-1); border-bottom: 1px solid var(--prism-border-1); }
+.tb-left { flex: none; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.tb-view { flex: 1 1 0; display: flex; align-items: center; gap: 16px; }
+.tb-view > * { animation: viewIn var(--prism-duration) var(--prism-ease); }
+.tb-right { flex: 0 1 auto; display: flex; align-items: center; justify-content: flex-end; gap: 6px; min-width: 0; margin-left: auto; }
+.file-info { display: flex; flex-direction: column; min-width: 0; max-width: 240px; }
+.file-name { display: flex; align-items: center; gap: 6px; min-width: 0; font-weight: var(--prism-weight-medium); line-height: 18px; white-space: nowrap; }
 .file-name svg { color: var(--prism-text-3); flex: none; }
 .file-name span { overflow: hidden; text-overflow: ellipsis; }
-.file-stats { display: flex; gap: 10px; font: var(--prism-text-sm) var(--prism-font-mono); color: var(--prism-text-3); white-space: nowrap; overflow: hidden; }
+.file-stats { display: flex; gap: 8px; font: var(--prism-text-xs) / 14px var(--prism-font-mono); color: var(--prism-text-3); white-space: nowrap; overflow: hidden; }
 .file-stats b { font-weight: var(--prism-weight-regular); color: var(--prism-text-2); }
 .stage { position: relative; min-width: 0; overflow: hidden; background: var(--prism-bg-0); }
 .view { position: absolute; inset: 0; animation: viewIn var(--prism-duration) var(--prism-ease); }
@@ -57,9 +62,16 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { box-shadow: va
 .sb-foot { margin-top: auto; color: var(--prism-text-3); }
 .sb-foot:hover { color: var(--prism-text-2); background: var(--prism-bg-3); }
 
-/* the top bar's side columns are equal so search stays centred; below this the stats would crowd out the file name */
+/* the top bar gives up words before it wraps: document action labels, then file stats, then the brand name */
+@media (max-width: 1800px) {
+  .tb-right .btn-label { display: none; }
+  .tb-right .btn:not(.icon) { width: var(--prism-control-md); padding: 0; }
+}
 @media (max-width: 1500px) {
   .file-stats { display: none; }
+}
+@media (max-width: 1280px) {
+  .brand-name { display: none; }
 }
 
 /* narrow windows: the sidebar folds to an icon rail */
@@ -131,18 +143,17 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { box-shadow: va
 
 /* ---------- view frame ---------- */
 .vf { position: absolute; inset: 0; display: flex; flex-direction: column; }
-.vf-head { height: 52px; flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px 0 20px; background: var(--prism-bg-1); border-bottom: 1px solid var(--prism-border-1); }
-.vf-title { display: flex; flex-direction: column; min-width: 0; }
-.vf-title h2 { margin: 0; font-size: var(--prism-text-lg); line-height: 20px; font-weight: var(--prism-weight-semibold); white-space: nowrap; }
-.vf-title p { margin: 0; font-size: var(--prism-text-sm); line-height: 16px; color: var(--prism-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.vf-tools { display: flex; align-items: center; gap: 6px; }
+.vf-title { flex: 0 1 auto; display: flex; flex-direction: column; min-width: 64px; }
+.vf-title h2 { margin: 0; font-size: var(--prism-text-md); line-height: 18px; font-weight: var(--prism-weight-semibold); white-space: nowrap; }
+.vf-title p { margin: 0; font-size: var(--prism-text-xs); line-height: 14px; color: var(--prism-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vf-tools { flex: none; display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .vf-body { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--prism-bg-0); }
 .vf-body.canvas { background-image: radial-gradient(var(--prism-grid-dot) 1px, transparent 1px); background-size: 16px 16px; }
 .vf-foot { height: 32px; flex: none; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: var(--prism-bg-1); border-top: 1px solid var(--prism-border-1); font-size: var(--prism-text-sm); color: var(--prism-text-3); white-space: nowrap; overflow: hidden; }
 .vf-foot > span { display: flex; align-items: center; gap: 6px; }
 .vf-foot .kbd { height: 18px; min-width: 18px; }
 .vf-status { margin-left: auto; font-family: var(--prism-font-mono); }
-@media (max-width: 1360px) { .vf-title p { max-width: 260px; } .picker input[type='range'] { width: 56px; } }
+@media (max-width: 1360px) { .picker input[type='range'] { width: 56px; } }
 
 .zoomctl { position: absolute; right: 12px; bottom: 12px; z-index: 4; height: var(--prism-control-md); display: flex; align-items: center; background: var(--prism-bg-1); border: 1px solid var(--prism-border-2); border-radius: var(--prism-radius-sm); font: var(--prism-text-sm) var(--prism-font-mono); color: var(--prism-text-2); }
 .zoomctl button { width: 28px; height: 100%; display: grid; place-items: center; border: 0; background: transparent; color: inherit; border-radius: var(--prism-radius-sm); }

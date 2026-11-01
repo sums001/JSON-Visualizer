@@ -39,7 +39,7 @@ export const useStore = create((set, get) => ({
   recordSets: [],
   source: '',
   name: '',
-  view: 'tree',
+  view: 'raw',
   selectedId: 0,
   hoverId: null,
   expanded: new Set(),
@@ -53,7 +53,12 @@ export const useStore = create((set, get) => ({
   editorOpen: false,
   shortcutsOpen: false,
   revealTick: 0,
-  theme: document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+  theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
+  viewSlot: null, // the top bar element each view's title and tools render into
+
+  setViewSlot(viewSlot) {
+    set({ viewSlot });
+  },
 
   setTheme(theme) {
     // the attribute goes first: canvas views read the resolved tokens when they re-render
@@ -89,6 +94,7 @@ export const useStore = create((set, get) => ({
       matchSet: null,
       trail: null,
       recordPath: recordSets[0]?.gpath ?? null,
+      view: 'raw', // every newly loaded document opens on its source
       editorOpen: false,
     });
   },
@@ -245,3 +251,8 @@ export const useStore = create((set, get) => ({
     if (target) get().select(target.id);
   },
 }));
+
+// another Prism page (a second tab, the extension's settings) switched theme: follow it
+window.addEventListener('storage', (e) => {
+  if (e.key === 'prism-theme' && (e.newValue === 'light' || e.newValue === 'dark')) useStore.getState().setTheme(e.newValue);
+});

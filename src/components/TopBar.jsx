@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '../store';
 import { formatBytes, isContainer, label, shortValue } from '../lib/model';
 import { typeColor } from '../lib/colors';
+import { EMBED, openSettings, showOriginal } from '../lib/embed';
 import Icon from './Icons';
 import { BrandMark, Kbd, MOD, Seg, TypeDot } from './common';
 
@@ -178,31 +179,48 @@ export default function TopBar() {
   const toggleInspector = useStore((s) => s.toggleInspector);
   const setEditorOpen = useStore((s) => s.setEditorOpen);
   const download = useStore((s) => s.download);
+  const setViewSlot = useStore((s) => s.setViewSlot);
+  const stats = `${model.nodes.length.toLocaleString()} nodes · depth ${model.maxDepth} · ${formatBytes(model.root.size)}`;
 
   return (
     <header className="topbar">
       <div className="tb-left">
         <button className="brand" onClick={close} title="Back to start">
           <BrandMark size={24} />
-          JSON Prism
+          <span className="brand-name">JSON Prism</span>
         </button>
         <span className="vsep" style={{ margin: 0 }} />
-        <span className="file-name" title={name}>
-          <Icon name="file" size={16} />
-          <span>{name}</span>
-        </span>
-        <span className="file-stats">
-          <span><b>{model.nodes.length.toLocaleString()}</b> nodes</span>
-          <span>depth <b>{model.maxDepth}</b></span>
-          <b>{formatBytes(model.root.size)}</b>
-        </span>
+        <div className="file-info" title={`${name}\n${stats}`}>
+          <span className="file-name">
+            <Icon name="file" size={14} />
+            <span>{name}</span>
+          </span>
+          <span className="file-stats">
+            <span><b>{model.nodes.length.toLocaleString()}</b> nodes</span>
+            <span>depth <b>{model.maxDepth}</b></span>
+            <b>{formatBytes(model.root.size)}</b>
+          </span>
+        </div>
+        <span className="vsep" style={{ margin: 0 }} />
       </div>
-      <Search />
+      {/* the active view's title and tools render here (see ViewFrame) */}
+      <div className="tb-view" ref={setViewSlot} />
       <div className="tb-right">
-        <button className="btn" onClick={() => setEditorOpen(true)} title="Edit source"><Icon name="code" size={16} />Source</button>
-        <button className="btn" onClick={download} title={`Download as JSON  ${MOD} S`}><Icon name="download" size={16} />Download</button>
-        <button className="btn ghost" onClick={close} title="Open another document"><Icon name="plus" size={16} />New</button>
+        <Search />
         <span className="vsep" />
+        <button className="btn" onClick={() => setEditorOpen(true)} title="Edit source"><Icon name="code" size={16} /><span className="btn-label">Source</span></button>
+        <button className="btn" onClick={download} title={`Download as JSON  ${MOD} S`}><Icon name="download" size={16} /><span className="btn-label">Download</span></button>
+        {EMBED ? (
+          <button className="btn ghost" onClick={showOriginal} title="Show the response as the browser renders it"><Icon name="globe" size={16} /><span className="btn-label">Original</span></button>
+        ) : (
+          <button className="btn ghost" onClick={close} title="Open another document"><Icon name="plus" size={16} /><span className="btn-label">New</span></button>
+        )}
+        <span className="vsep" />
+        {openSettings && (
+          <button className="btn icon" onClick={openSettings} title="Extension settings">
+            <Icon name="settings" size={16} />
+          </button>
+        )}
         <button className="btn icon" onClick={toggleTheme} title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
           <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={16} />
         </button>

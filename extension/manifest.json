@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "JSON Prism",
+  "version": "0.0.0",
+  "description": "Opens JSON responses in Prism: tree, radial, graph, cards, schema, table, columns and raw views of one document.",
+  "icons": {
+    "16": "prism-logo-16.png",
+    "32": "prism-logo-32.png",
+    "48": "prism-logo-48.png",
+    "128": "prism-logo-128.png"
+  },
+  "action": {
+    "default_title": "Open JSON Prism",
+    "default_icon": {
+      "16": "prism-logo-16.png",
+      "32": "prism-logo-32.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { typeColor, typeSoft, TYPE_GLYPH } from '../lib/colors';
 import { formatBytes, isContainer, preview } from '../lib/model';
 import { useStore } from '../store';
@@ -48,18 +49,23 @@ export function Seg({ value, options, onChange, label }) {
   );
 }
 
-// Every view sits in the same frame: a title bar with its tools, the canvas, and a strip of
-// interaction hints. bodyRef measures only the canvas, so fits and centring ignore the chrome.
+// Every view sits in the same frame: its title and tools (portalled into the top bar, so there's
+// one header row), the canvas, and a strip of interaction hints. bodyRef measures only the canvas.
 export function ViewFrame({ title, subtitle, tools, hints = [], status, bodyRef, canvas, children }) {
+  const slot = useStore((s) => s.viewSlot);
   return (
     <div className="vf">
-      <div className="vf-head">
-        <div className="vf-title">
-          <h2>{title}</h2>
-          {subtitle && <p>{subtitle}</p>}
-        </div>
-        {tools && <div className="vf-tools">{tools}</div>}
-      </div>
+      {slot &&
+        createPortal(
+          <>
+            <div className="vf-title">
+              <h2>{title}</h2>
+              {subtitle && <p title={subtitle}>{subtitle}</p>}
+            </div>
+            {tools && <div className="vf-tools">{tools}</div>}
+          </>,
+          slot,
+        )}
       <div className={'vf-body' + (canvas ? ' canvas' : '')} ref={bodyRef}>
         {children}
       </div>

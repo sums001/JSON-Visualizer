@@ -5,6 +5,7 @@ import { SAMPLES } from '../lib/samples';
 import { buildModel, formatBytes, isContainer, label, shortValue } from '../lib/model';
 import { inferSchema } from '../lib/schema';
 import { typeColor } from '../lib/colors';
+import { openSettings } from '../lib/embed';
 import Icon from './Icons';
 import CodeArea, { LINE_H, offsetOf } from './CodeArea';
 import { BrandMark, Kbd, MOD, TypeDot } from './common';
@@ -318,6 +319,11 @@ export default function Landing() {
         </div>
         <div className="ld-head-r">
           <span className="ld-privacy"><Icon name="lock" size={15} />Runs in your browser. Nothing is uploaded.</span>
+          {openSettings && (
+            <button className="btn icon bordered" onClick={openSettings} title="Extension settings">
+              <Icon name="settings" size={16} />
+            </button>
+          )}
           <button className="btn icon bordered" onClick={toggleTheme} title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
             <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={16} />
           </button>
