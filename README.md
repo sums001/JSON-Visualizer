@@ -4,6 +4,8 @@
 
 Prism is an open-source JSON viewer for Chrome. Open any JSON response in the browser and it is replaced in place by an explorer with 8 linked views. Selecting a node anywhere selects it everywhere, and the inspector on the right always shows the current selection. The same app also runs as a standalone web page where you can paste, open or fetch JSON.
 
+**Install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/json-prism/cfamdgeiglncgcibopfihlpehondankf).**
+
 The source is on GitHub at [sums001/JSON-Visualizer](https://github.com/sums001/JSON-Visualizer). Issues and pull requests are welcome.
 
 ```bash
@@ -34,6 +36,8 @@ Long arrays are windowed: Tree, Radial and Cards show 20 items at a time with "�
 Keys: `/` or `Ctrl/⌘ K` search · `1`–`8` switch view · `]` toggle the inspector · `Ctrl/⌘ S` download the document as JSON · `?` list every shortcut · arrow keys walk the tree (parent, child, siblings).
 
 ## Chrome extension
+
+The published extension is [JSON Prism on the Chrome Web Store](https://chromewebstore.google.com/detail/json-prism/cfamdgeiglncgcibopfihlpehondankf). To build and load it from source instead:
 
 ```bash
 npm run build:ext   # unpacked extension in dist-extension/
